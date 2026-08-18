@@ -49,6 +49,7 @@ public class Person implements Displayable {
 
 
     // Overloaded Constructor
+
     public Person(
             String id,
             String firstName,
@@ -73,6 +74,7 @@ public class Person implements Displayable {
     // Setters ___________________________________________________
 
     public void setId(String id) {
+
         if (id == null || id.trim().isEmpty()) {
             System.out.println("ID cannot be empty.");
             return;
@@ -81,7 +83,9 @@ public class Person implements Displayable {
         this.id = id;
     }
 
+
     public void setFirstName(String firstName) {
+
         if (firstName == null || firstName.trim().isEmpty()) {
             System.out.println("First name cannot be empty.");
             return;
@@ -90,7 +94,9 @@ public class Person implements Displayable {
         this.firstName = firstName;
     }
 
+
     public void setLastName(String lastName) {
+
         if (lastName == null || lastName.trim().isEmpty()) {
             System.out.println("Last name cannot be empty.");
             return;
@@ -99,7 +105,9 @@ public class Person implements Displayable {
         this.lastName = lastName;
     }
 
+
     public void setDateOfBirth(String dateOfBirth) {
+
         if (dateOfBirth == null || dateOfBirth.trim().isEmpty()) {
             System.out.println("Date of birth cannot be empty.");
             return;
@@ -108,7 +116,9 @@ public class Person implements Displayable {
         this.dateOfBirth = dateOfBirth;
     }
 
+
     public void setGender(String gender) {
+
         if (gender == null || gender.trim().isEmpty()) {
             System.out.println("Gender cannot be empty.");
             return;
@@ -117,7 +127,9 @@ public class Person implements Displayable {
         this.gender = gender;
     }
 
+
     public void setPhoneNumber(String phoneNumber) {
+
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
             System.out.println("Phone number cannot be empty.");
             return;
@@ -131,7 +143,9 @@ public class Person implements Displayable {
         this.phoneNumber = phoneNumber;
     }
 
+
     public void setEmail(String email) {
+
         if (email == null || email.trim().isEmpty()) {
             System.out.println("Email cannot be empty.");
             return;
@@ -145,7 +159,9 @@ public class Person implements Displayable {
         this.email = email;
     }
 
+
     public void setAddress(String address) {
+
         if (address == null || address.trim().isEmpty()) {
             System.out.println("Address cannot be empty.");
             return;
@@ -154,7 +170,9 @@ public class Person implements Displayable {
         this.address = address;
     }
 
+
     public void setNationalId(String nationalId) {
+
         if (nationalId == null || nationalId.trim().isEmpty()) {
             System.out.println("National ID cannot be empty.");
             return;
@@ -163,7 +181,9 @@ public class Person implements Displayable {
         this.nationalId = nationalId;
     }
 
+
     public void setAge(int age) {
+
         if (age < 0 || age > 120) {
             System.out.println("Invalid age.");
             return;
@@ -171,6 +191,7 @@ public class Person implements Displayable {
 
         this.age = age;
     }
+
 
     public void setActive(boolean active) {
         this.active = active;
@@ -183,41 +204,51 @@ public class Person implements Displayable {
         return id;
     }
 
+
     public String getFirstName() {
         return firstName;
     }
+
 
     public String getLastName() {
         return lastName;
     }
 
+
     public String getDateOfBirth() {
         return dateOfBirth;
     }
+
 
     public String getGender() {
         return gender;
     }
 
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
 
     public String getEmail() {
         return email;
     }
 
+
     public String getAddress() {
         return address;
     }
+
 
     public String getNationalId() {
         return nationalId;
     }
 
+
     public int getAge() {
         return age;
     }
+
 
     public boolean isActive() {
         return active;
@@ -256,7 +287,10 @@ public class Person implements Displayable {
 
     @Override
     public String displaySummary() {
-        return getId() + " - " + getFullName();
+
+        return getId()
+                + " - "
+                + getFullName();
     }
 
 
@@ -285,15 +319,13 @@ public class Person implements Displayable {
 
         Person other = (Person) obj;
 
-        return id != null &&
-                id.equalsIgnoreCase(other.id);
+        return id != null
+                && id.equals(other.id);
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                id == null ? null : id.toLowerCase()
-        );
+        return Objects.hash(id);
     }
 }
