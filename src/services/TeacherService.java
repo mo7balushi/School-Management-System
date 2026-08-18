@@ -2,20 +2,21 @@ package services;
 
 import entities.HeadTeacher;
 import entities.Teacher;
+import interfaces.Manageable;
+import interfaces.Searchable;
 
-public class TeacherService {
+import java.util.ArrayList;
+import java.util.List;
 
-    private Teacher[] teachers;
-    private int teacherCount;
+public class TeacherService
+        implements Manageable<Teacher>, Searchable<Teacher> {
 
-    public TeacherService() {
-        teachers = new Teacher[50];
-        teacherCount = 0;
-    }
+    private List<Teacher> teachers = new ArrayList<>();
 
 
-    // Add Teacher ______________________________________________
+    // Manageable Methods _______________________________________
 
+    @Override
     public void add(Teacher teacher) {
 
         if (teacher == null) {
@@ -23,74 +24,39 @@ public class TeacherService {
             return;
         }
 
-        if (teacherCount >= teachers.length) {
-            System.out.println("Teacher storage is full.");
-            return;
-        }
-
-        teachers[teacherCount] = teacher;
-        teacherCount++;
+        teachers.add(teacher);
     }
 
 
-    // Add Head Teacher _________________________________________
+    @Override
+    public boolean remove(String id) {
 
-    public void addHeadTeacher(HeadTeacher headTeacher) {
+        Teacher teacher = searchById(id);
 
-        if (headTeacher == null) {
-            System.out.println("Head teacher cannot be null.");
-            return;
-        }
-
-        add(headTeacher);
-    }
-
-
-    // Remove By ID _____________________________________________
-
-    public boolean removeById(String id) {
-
-        for (int i = 0; i < teacherCount; i++) {
-
-            if (teachers[i].getId().equals(id)) {
-
-                for (int j = i; j < teacherCount - 1; j++) {
-                    teachers[j] = teachers[j + 1];
-                }
-
-                teachers[teacherCount - 1] = null;
-                teacherCount--;
-
-                return true;
-            }
+        if (teacher != null) {
+            teachers.remove(teacher);
+            return true;
         }
 
         return false;
     }
 
 
-    // Get All _________________________________________________
-
-    public Teacher[] getAll() {
-
-        Teacher[] result = new Teacher[teacherCount];
-
-        for (int i = 0; i < teacherCount; i++) {
-            result[i] = teachers[i];
-        }
-
-        return result;
+    @Override
+    public List<Teacher> getAll() {
+        return teachers;
     }
 
 
-    // Search By ID _____________________________________________
+    // Searchable Methods _______________________________________
 
+    @Override
     public Teacher searchById(String id) {
 
-        for (int i = 0; i < teacherCount; i++) {
+        for (Teacher teacher : teachers) {
 
-            if (teachers[i].getId().equals(id)) {
-                return teachers[i];
+            if (teacher.getId().equalsIgnoreCase(id)) {
+                return teacher;
             }
         }
 
@@ -98,16 +64,12 @@ public class TeacherService {
     }
 
 
-    // Search By Keyword ________________________________________
+    @Override
+    public List<Teacher> search(String keyword) {
 
-    public Teacher[] search(String keyword) {
+        List<Teacher> result = new ArrayList<>();
 
-        Teacher[] temp = new Teacher[teacherCount];
-        int count = 0;
-
-        for (int i = 0; i < teacherCount; i++) {
-
-            Teacher teacher = teachers[i];
+        for (Teacher teacher : teachers) {
 
             if (
                     teacher.getFirstName()
@@ -123,18 +85,24 @@ public class TeacherService {
                             .contains(keyword.toLowerCase())
             ) {
 
-                temp[count] = teacher;
-                count++;
+                result.add(teacher);
             }
         }
 
-        Teacher[] result = new Teacher[count];
+        return result;
+    }
 
-        for (int i = 0; i < count; i++) {
-            result[i] = temp[i];
+
+    // Add Head Teacher _________________________________________
+
+    public void addHeadTeacher(HeadTeacher headTeacher) {
+
+        if (headTeacher == null) {
+            System.out.println("Head teacher cannot be null.");
+            return;
         }
 
-        return result;
+        teachers.add(headTeacher);
     }
 
 
@@ -156,30 +124,19 @@ public class TeacherService {
     }
 
 
-    // List By Subject ___________________________________________
+    // List Teachers By Subject _________________________________
 
-    public Teacher[] listBySubject(String subject) {
+    public List<Teacher> listBySubject(String subject) {
 
-        Teacher[] temp = new Teacher[teacherCount];
-        int count = 0;
+        List<Teacher> result = new ArrayList<>();
 
-        for (int i = 0; i < teacherCount; i++) {
+        for (Teacher teacher : teachers) {
 
-            if (
-                    teachers[i]
-                            .getSubject()
-                            .equalsIgnoreCase(subject)
-            ) {
+            if (teacher.getSubject()
+                    .equalsIgnoreCase(subject)) {
 
-                temp[count] = teachers[i];
-                count++;
+                result.add(teacher);
             }
-        }
-
-        Teacher[] result = new Teacher[count];
-
-        for (int i = 0; i < count; i++) {
-            result[i] = temp[i];
         }
 
         return result;
@@ -188,31 +145,24 @@ public class TeacherService {
 
     // Available Teachers _______________________________________
 
-    public Teacher[] availableTeachers() {
+    public List<Teacher> availableTeachers() {
 
-        Teacher[] temp = new Teacher[teacherCount];
-        int count = 0;
+        List<Teacher> result = new ArrayList<>();
 
-        for (int i = 0; i < teacherCount; i++) {
+        for (Teacher teacher : teachers) {
 
-            if (teachers[i].getClassesTaught().isEmpty()) {
-
-                temp[count] = teachers[i];
-                count++;
+            if (teacher.getClassesTaught().isEmpty()) {
+                result.add(teacher);
             }
-        }
-
-        Teacher[] result = new Teacher[count];
-
-        for (int i = 0; i < count; i++) {
-            result[i] = temp[i];
         }
 
         return result;
     }
 
 
+    // Count _________________________________________________
+
     public int getTeacherCount() {
-        return teacherCount;
+        return teachers.size();
     }
 }
