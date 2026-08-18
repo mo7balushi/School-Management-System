@@ -1,9 +1,11 @@
 package entities;
 
 public class Teacher extends Person {
+
     private String subject;
-    private double salary;
     private int yearsOfExperience;
+    private double salary;
+
     public Teacher(
             String id,
             String firstName,
@@ -39,7 +41,8 @@ public class Teacher extends Person {
         setSalary(salary);
     }
 
-    //Getter______________________________________________________
+    // Setters
+
     public void setSubject(String subject) {
         if (subject == null || subject.trim().isEmpty()) {
             System.out.println("Subject cannot be empty.");
@@ -48,6 +51,7 @@ public class Teacher extends Person {
 
         this.subject = subject;
     }
+
     public void setYearsOfExperience(int yearsOfExperience) {
         if (yearsOfExperience < 0) {
             System.out.println("Experience cannot be negative.");
@@ -55,20 +59,6 @@ public class Teacher extends Person {
         }
 
         this.yearsOfExperience = yearsOfExperience;
-    }
-
-
-    //Setter____________________________________________________
-    public String getSubject() {
-        return subject;
-    }
-    public int getYearsOfExperience() {
-        return yearsOfExperience;
-    }
-
-    //Function
-    public double getSalary() {
-        return salary;
     }
 
     public void setSalary(double salary) {
@@ -79,6 +69,23 @@ public class Teacher extends Person {
 
         this.salary = salary;
     }
+
+    // Getters
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public int getYearsOfExperience() {
+        return yearsOfExperience;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    // Overloading
+
     public void updateSalary(double salary) {
         setSalary(salary);
     }
@@ -88,14 +95,22 @@ public class Teacher extends Person {
         System.out.println("Salary updated. Reason: " + reason);
     }
 
+    // Overriding
+
     @Override
     public void displayInfo() {
         System.out.println(
-                "Teacher: " + getFirstName() + " " + getLastName() +
+                "Teacher: " + getFullName() +
+                        ", ID: " + getId() +
                         ", Subject: " + getSubject() +
                         ", Experience: " + getYearsOfExperience() + " years" +
                         ", Salary: " + getSalary()
         );
     }
 
+    @Override
+    public String displaySummary() {
+        return getId() + " - " + getFullName()
+                + " - " + getSubject();
+    }
 }
