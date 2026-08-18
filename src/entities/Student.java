@@ -1,18 +1,14 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Student extends Person {
 
     private String gradeLevel;
     private String enrollmentDate;
-
-    private String[] enrolledSubjects;
-    private String[] pastCourseRecordIds;
-
-    private int subjectCount;
-    private int recordCount;
-
     private double feeBalance;
-    private boolean scholarship;
+    private List<String> subjects;
 
 
     // Constructor ______________________________________________
@@ -26,13 +22,9 @@ public class Student extends Person {
             String phoneNumber,
             String email,
             String address,
-            String nationalId,
-            int age,
-            boolean active,
             String gradeLevel,
             String enrollmentDate,
-            double feeBalance,
-            boolean scholarship) {
+            double feeBalance) {
 
         super(
                 id,
@@ -42,56 +34,15 @@ public class Student extends Person {
                 gender,
                 phoneNumber,
                 email,
-                address,
-                nationalId,
-                age,
-                active
+                address
         );
 
-        setGradeLevel(gradeLevel);
-        setEnrollmentDate(enrollmentDate);
-        setFeeBalance(feeBalance);
-        setScholarship(scholarship);
-
-        enrolledSubjects = new String[10];
-        pastCourseRecordIds = new String[20];
-
-        subjectCount = 0;
-        recordCount = 0;
-    }
-
-
-    // Setters _________________________________________________
-
-    public void setGradeLevel(String gradeLevel) {
-        if (gradeLevel == null || gradeLevel.trim().isEmpty()) {
-            System.out.println("Grade level cannot be empty.");
-            return;
-        }
-
         this.gradeLevel = gradeLevel;
-    }
-
-    public void setEnrollmentDate(String enrollmentDate) {
-        if (enrollmentDate == null || enrollmentDate.trim().isEmpty()) {
-            System.out.println("Enrollment date cannot be empty.");
-            return;
-        }
-
         this.enrollmentDate = enrollmentDate;
-    }
 
-    public void setFeeBalance(double feeBalance) {
-        if (feeBalance < 0) {
-            System.out.println("Fee balance cannot be negative.");
-            return;
-        }
+        setFeeBalance(feeBalance);
 
-        this.feeBalance = feeBalance;
-    }
-
-    public void setScholarship(boolean scholarship) {
-        this.scholarship = scholarship;
+        subjects = new ArrayList<>();
     }
 
 
@@ -109,129 +60,72 @@ public class Student extends Person {
         return feeBalance;
     }
 
-    public boolean isScholarship() {
-        return scholarship;
+    public List<String> getSubjects() {
+        return subjects;
     }
 
-    public int getSubjectCount() {
-        return subjectCount;
+
+    // Setters _________________________________________________
+
+    public void setGradeLevel(String gradeLevel) {
+        this.gradeLevel = gradeLevel;
     }
 
-    public int getRecordCount() {
-        return recordCount;
+    public void setEnrollmentDate(String enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
+    }
+
+    public void setFeeBalance(double feeBalance) {
+
+        if (feeBalance < 0) {
+            System.out.println(
+                    "Fee cannot be below 0. Keeping it at 0."
+            );
+
+            this.feeBalance = 0;
+            return;
+        }
+
+        this.feeBalance = feeBalance;
     }
 
 
     // Subject Functions _______________________________________
 
     public void addSubject(String subject) {
-
-        if (subject == null || subject.trim().isEmpty()) {
-            System.out.println("Subject cannot be empty.");
-            return;
-        }
-
-        if (hasSubject(subject)) {
-            System.out.println("Student already has this subject.");
-            return;
-        }
-
-        if (subjectCount >= enrolledSubjects.length) {
-            System.out.println("Subject list is full.");
-            return;
-        }
-
-        enrolledSubjects[subjectCount] = subject;
-        subjectCount++;
+        subjects.add(subject);
     }
 
 
-    public boolean hasSubject(String subject) {
+    // Overloading ______________________________________________
 
-        for (int i = 0; i < subjectCount; i++) {
+    public void updateContact(String phone) {
+        setPhoneNumber(phone);
+    }
 
-            if (enrolledSubjects[i].equalsIgnoreCase(subject)) {
-                return true;
-            }
-        }
+    public void updateContact(
+            String phone,
+            String email) {
 
-        return false;
+        setPhoneNumber(phone);
+        setEmail(email);
     }
 
 
-    public void listSubjects() {
-
-        if (subjectCount == 0) {
-            System.out.println("No subjects enrolled.");
-            return;
-        }
-
-        for (int i = 0; i < subjectCount; i++) {
-            System.out.println(enrolledSubjects[i]);
-        }
-    }
-
-
-    // Course Record Functions _________________________________
-
-    public void addRecordId(String recordId) {
-
-        if (recordId == null || recordId.trim().isEmpty()) {
-            System.out.println("Record ID cannot be empty.");
-            return;
-        }
-
-        if (recordCount >= pastCourseRecordIds.length) {
-            System.out.println("Course record list is full.");
-            return;
-        }
-
-        pastCourseRecordIds[recordCount] = recordId;
-        recordCount++;
-    }
-
-
-    // Fee Functions ___________________________________________
-
-    public void addToBalance(double amount) {
-
-        if (amount <= 0) {
-            System.out.println("Amount must be greater than zero.");
-            return;
-        }
-
-        feeBalance += amount;
-    }
-
-
-    public void clearBalance() {
-        feeBalance = 0;
-    }
-
-
-    // Overriding ______________________________________________
+    // Overriding _______________________________________________
 
     @Override
     public void displayInfo() {
 
         System.out.println(
-                "Student: " + getFullName() +
-                        ", ID: " + getId() +
-                        ", Grade Level: " + getGradeLevel() +
-                        ", Enrollment Date: " + getEnrollmentDate() +
-                        ", Fee Balance: " + getFeeBalance() +
-                        ", Scholarship: " + isScholarship()
+                "Student: "
+                        + getFirstName()
+                        + " "
+                        + getLastName()
+                        + " | grade: "
+                        + gradeLevel
+                        + " | fee balance: "
+                        + feeBalance
         );
-    }
-
-
-    @Override
-    public String displaySummary() {
-
-        return getId()
-                + " - "
-                + getFullName()
-                + " - Grade: "
-                + getGradeLevel();
     }
 }
