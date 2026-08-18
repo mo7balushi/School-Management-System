@@ -37,7 +37,9 @@ public class Student extends Person {
         setGrade(grade);
         setFeeBalance(feeBalance);
     }
-    //Setters________________________________________
+
+    // Setters
+
     public void setGrade(String grade) {
         if (grade == null || grade.trim().isEmpty()) {
             System.out.println("Grade cannot be empty.");
@@ -46,6 +48,7 @@ public class Student extends Person {
 
         this.grade = grade;
     }
+
     public void setFeeBalance(double feeBalance) {
         if (feeBalance < 0) {
             System.out.println("Fee balance cannot be negative.");
@@ -55,7 +58,8 @@ public class Student extends Person {
         this.feeBalance = feeBalance;
     }
 
-    //Getters_________________________________________________
+    // Getters
+
     public String getGrade() {
         return grade;
     }
@@ -64,16 +68,7 @@ public class Student extends Person {
         return feeBalance;
     }
 
-   //Functions
-   @Override
-   public void displayInfo() {
-       System.out.println(
-               "Student: " + getFirstName() + " " + getLastName() +
-                       ", Grade: " + getGrade() +
-                       ", Fee Balance: " + getFeeBalance()
-       );
-   }
-
+    // Overloading
 
     public void updateFee(double amount) {
         setFeeBalance(amount);
@@ -84,7 +79,20 @@ public class Student extends Person {
         System.out.println("Reason: " + reason);
     }
 
+    // Overriding
 
+    @Override
+    public void displayInfo() {
+        System.out.println(
+                "Student: " + getFullName() +
+                        ", ID: " + getId() +
+                        ", Grade: " + getGrade() +
+                        ", Fee Balance: " + getFeeBalance()
+        );
+    }
 
-
+    @Override
+    public String displaySummary() {
+        return getId() + " - " + getFullName() + " - Grade: " + getGrade();
+    }
 }
