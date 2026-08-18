@@ -2,7 +2,8 @@ package entities;
 
 public class SeniorStudent extends Student {
 
-    private String specialization;
+    private String major;
+    private double gpa;
 
     public SeniorStudent(
             String id,
@@ -13,14 +14,11 @@ public class SeniorStudent extends Student {
             String phoneNumber,
             String email,
             String address,
-            String nationalId,
-            int age,
-            boolean active,
             String gradeLevel,
             String enrollmentDate,
             double feeBalance,
-            boolean scholarship,
-            String specialization) {
+            String major,
+            double gpa) {
 
         super(
                 id,
@@ -31,54 +29,69 @@ public class SeniorStudent extends Student {
                 phoneNumber,
                 email,
                 address,
-                nationalId,
-                age,
-                active,
                 gradeLevel,
                 enrollmentDate,
-                feeBalance,
-                scholarship
+                feeBalance
         );
 
-        setSpecialization(specialization);
+        setMajor(major);
+        setGpa(gpa);
     }
 
-    // Setter
 
-    public void setSpecialization(String specialization) {
-        if (specialization == null || specialization.trim().isEmpty()) {
-            System.out.println("Specialization cannot be empty.");
+    // Getters
+
+    public String getMajor() {
+        return major;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+
+
+    // Setters
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public void setGpa(double gpa) {
+
+        if (gpa < 0 || gpa > 4.0) {
+            System.out.println("GPA must be between 0 and 4.");
             return;
         }
 
-        this.specialization = specialization;
+        this.gpa = gpa;
     }
 
-    // Getter
-
-    public String getSpecialization() {
-        return specialization;
-    }
 
     // Overriding
 
     @Override
     public void displayInfo() {
+
         System.out.println(
-                "Senior Student: " + getFullName() +
-                        ", ID: " + getId() +
-                        ", Grade Level: " + getGradeLevel() +
-                        ", Enrollment Date: " + getEnrollmentDate() +
-                        ", Fee Balance: " + getFeeBalance() +
-                        ", Scholarship: " + isScholarship() +
-                        ", Specialization: " + getSpecialization()
+                "Senior Student: "
+                        + getFullName()
+                        + " | Grade: "
+                        + getGradeLevel()
+                        + " | Major: "
+                        + getMajor()
+                        + " | GPA: "
+                        + getGpa()
         );
     }
 
+
     @Override
     public String displaySummary() {
-        return getId() + " - " + getFullName()
-                + " - " + getGradeLevel()
-                + " - " + getSpecialization();
+
+        return getId()
+                + " - "
+                + getFullName()
+                + " - "
+                + getMajor();
     }
 }
