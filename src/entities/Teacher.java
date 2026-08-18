@@ -1,18 +1,14 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Teacher extends Person {
 
     private String subject;
     private int experienceYears;
     private double salary;
-
-    private String[] availableSlots;
-    private String[] assignedClassIds;
-
-    private int slotCount;
-    private int classCount;
-
-    private boolean formTeacher;
+    private List<String> classesTaught;
 
 
     // Constructor ______________________________________________
@@ -26,13 +22,9 @@ public class Teacher extends Person {
             String phoneNumber,
             String email,
             String address,
-            String nationalId,
-            int age,
-            boolean active,
             String subject,
             int experienceYears,
-            double salary,
-            boolean formTeacher) {
+            double salary) {
 
         super(
                 id,
@@ -42,56 +34,14 @@ public class Teacher extends Person {
                 gender,
                 phoneNumber,
                 email,
-                address,
-                nationalId,
-                age,
-                active
+                address
         );
 
-        setSubject(subject);
+        this.subject = subject;
         setExperienceYears(experienceYears);
         setSalary(salary);
-        setFormTeacher(formTeacher);
 
-        availableSlots = new String[20];
-        assignedClassIds = new String[20];
-
-        slotCount = 0;
-        classCount = 0;
-    }
-
-
-    // Setters _________________________________________________
-
-    public void setSubject(String subject) {
-        if (subject == null || subject.trim().isEmpty()) {
-            System.out.println("Subject cannot be empty.");
-            return;
-        }
-
-        this.subject = subject;
-    }
-
-    public void setExperienceYears(int experienceYears) {
-        if (experienceYears < 0) {
-            System.out.println("Experience cannot be negative.");
-            return;
-        }
-
-        this.experienceYears = experienceYears;
-    }
-
-    public void setSalary(double salary) {
-        if (salary < 0) {
-            System.out.println("Salary cannot be negative.");
-            return;
-        }
-
-        this.salary = salary;
-    }
-
-    public void setFormTeacher(boolean formTeacher) {
-        this.formTeacher = formTeacher;
+        classesTaught = new ArrayList<>();
     }
 
 
@@ -109,135 +59,84 @@ public class Teacher extends Person {
         return salary;
     }
 
-    public boolean isFormTeacher() {
-        return formTeacher;
-    }
-
-    public int getSlotCount() {
-        return slotCount;
-    }
-
-    public int getClassLoad() {
-        return classCount;
+    public List<String> getClassesTaught() {
+        return classesTaught;
     }
 
 
-    // Slot Methods _____________________________________________
+    // Setters _________________________________________________
 
-    public void addSlot(String slot) {
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-        if (slot == null || slot.trim().isEmpty()) {
-            System.out.println("Slot cannot be empty.");
+    public void setExperienceYears(int experienceYears) {
+
+        if (experienceYears < 0) {
+            System.out.println("Experience cannot be negative.");
             return;
         }
 
-        if (hasSlot(slot)) {
-            System.out.println("Slot already exists.");
+        this.experienceYears = experienceYears;
+    }
+
+    public void setSalary(double salary) {
+
+        if (salary < 0) {
+            System.out.println("Salary cannot be negative.");
             return;
         }
 
-        if (slotCount >= availableSlots.length) {
-            System.out.println("Slot list is full.");
+        this.salary = salary;
+    }
+
+
+    // Class Functions __________________________________________
+
+    public void addClass(String className) {
+
+        if (className == null || className.trim().isEmpty()) {
+            System.out.println("Class cannot be empty.");
             return;
         }
 
-        availableSlots[slotCount] = slot;
-        slotCount++;
+        classesTaught.add(className);
     }
 
 
-    public boolean hasSlot(String slot) {
-
-        for (int i = 0; i < slotCount; i++) {
-
-            if (availableSlots[i].equalsIgnoreCase(slot)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    public void removeSlot(String slot) {
-
-        for (int i = 0; i < slotCount; i++) {
-
-            if (availableSlots[i].equalsIgnoreCase(slot)) {
-
-                for (int j = i; j < slotCount - 1; j++) {
-                    availableSlots[j] = availableSlots[j + 1];
-                }
-
-                availableSlots[slotCount - 1] = null;
-                slotCount--;
-
-                return;
-            }
-        }
-
-        System.out.println("Slot not found.");
-    }
-
-
-    // Class Assignment _________________________________________
-
-    public void assignClass(String classId) {
-
-        if (classId == null || classId.trim().isEmpty()) {
-            System.out.println("Class ID cannot be empty.");
-            return;
-        }
-
-        if (classCount >= assignedClassIds.length) {
-            System.out.println("Class list is full.");
-            return;
-        }
-
-        assignedClassIds[classCount] = classId;
-        classCount++;
-    }
-
-
-    // Salary Methods ___________________________________________
-
-    public void raiseSalary(double amount) {
-
-        if (amount <= 0) {
-            System.out.println("Salary increase must be greater than zero.");
-            return;
-        }
-
-        setSalary(salary + amount);
-    }
-
-
-    // Overloading required later in Task 2.2
+    // Overloading ______________________________________________
 
     public void updateSalary(double salary) {
         setSalary(salary);
     }
 
-    public void updateSalary(double salary, String reason) {
+    public void updateSalary(
+            double salary,
+            String reason) {
+
         setSalary(salary);
-        System.out.println("Salary updated. Reason: " + reason);
+
+        System.out.println(
+                "Salary updated. Reason: " + reason
+        );
     }
 
 
-    // Overriding ______________________________________________
+    // Overriding _______________________________________________
 
     @Override
     public void displayInfo() {
 
         System.out.println(
-                "Teacher: " + getFullName() +
-                        ", ID: " + getId() +
-                        ", Subject: " + getSubject() +
-                        ", Experience: " + getExperienceYears() + " years" +
-                        ", Salary: " + getSalary() +
-                        ", Form Teacher: " + isFormTeacher() +
-                        ", Available Slots: " + getSlotCount() +
-                        ", Class Load: " + getClassLoad()
+                "Teacher: "
+                        + getFullName()
+                        + " | Subject: "
+                        + getSubject()
+                        + " | Experience: "
+                        + getExperienceYears()
+                        + " years"
+                        + " | Salary: "
+                        + getSalary()
         );
     }
 
