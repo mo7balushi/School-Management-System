@@ -16,8 +16,10 @@ public class SeniorStudent extends Student {
             String nationalId,
             int age,
             boolean active,
-            String grade,
+            String gradeLevel,
+            String enrollmentDate,
             double feeBalance,
+            boolean scholarship,
             String specialization) {
 
         super(
@@ -32,8 +34,10 @@ public class SeniorStudent extends Student {
                 nationalId,
                 age,
                 active,
-                grade,
-                feeBalance
+                gradeLevel,
+                enrollmentDate,
+                feeBalance,
+                scholarship
         );
 
         setSpecialization(specialization);
@@ -63,8 +67,10 @@ public class SeniorStudent extends Student {
         System.out.println(
                 "Senior Student: " + getFullName() +
                         ", ID: " + getId() +
-                        ", Grade: " + getGrade() +
+                        ", Grade Level: " + getGradeLevel() +
+                        ", Enrollment Date: " + getEnrollmentDate() +
                         ", Fee Balance: " + getFeeBalance() +
+                        ", Scholarship: " + isScholarship() +
                         ", Specialization: " + getSpecialization()
         );
     }
@@ -72,6 +78,7 @@ public class SeniorStudent extends Student {
     @Override
     public String displaySummary() {
         return getId() + " - " + getFullName()
+                + " - " + getGradeLevel()
                 + " - " + getSpecialization();
     }
 }
