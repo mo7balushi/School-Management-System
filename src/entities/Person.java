@@ -2,6 +2,8 @@ package entities;
 
 import interfaces.Displayable;
 
+import java.util.Objects;
+
 public class Person implements Displayable {
 
     private String id;
@@ -15,6 +17,9 @@ public class Person implements Displayable {
     private String nationalId;
     private int age;
     private boolean active;
+
+
+    // Constructors ________________________________________________
 
     public Person(
             String id,
@@ -42,6 +47,29 @@ public class Person implements Displayable {
         setActive(active);
     }
 
+
+    // Overloaded Constructor
+    public Person(
+            String id,
+            String firstName,
+            String lastName) {
+
+        this(
+                id,
+                firstName,
+                lastName,
+                "N/A",
+                "Unknown",
+                "00000000",
+                "unknown@school.com",
+                "N/A",
+                "N/A",
+                0,
+                true
+        );
+    }
+
+
     // Setters ___________________________________________________
 
     public void setId(String id) {
@@ -49,6 +77,7 @@ public class Person implements Displayable {
             System.out.println("ID cannot be empty.");
             return;
         }
+
         this.id = id;
     }
 
@@ -57,6 +86,7 @@ public class Person implements Displayable {
             System.out.println("First name cannot be empty.");
             return;
         }
+
         this.firstName = firstName;
     }
 
@@ -65,6 +95,7 @@ public class Person implements Displayable {
             System.out.println("Last name cannot be empty.");
             return;
         }
+
         this.lastName = lastName;
     }
 
@@ -73,6 +104,7 @@ public class Person implements Displayable {
             System.out.println("Date of birth cannot be empty.");
             return;
         }
+
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -81,6 +113,7 @@ public class Person implements Displayable {
             System.out.println("Gender cannot be empty.");
             return;
         }
+
         this.gender = gender;
     }
 
@@ -117,6 +150,7 @@ public class Person implements Displayable {
             System.out.println("Address cannot be empty.");
             return;
         }
+
         this.address = address;
     }
 
@@ -125,6 +159,7 @@ public class Person implements Displayable {
             System.out.println("National ID cannot be empty.");
             return;
         }
+
         this.nationalId = nationalId;
     }
 
@@ -133,12 +168,14 @@ public class Person implements Displayable {
             System.out.println("Invalid age.");
             return;
         }
+
         this.age = age;
     }
 
     public void setActive(boolean active) {
         this.active = active;
     }
+
 
     // Getters ___________________________________________________
 
@@ -186,13 +223,25 @@ public class Person implements Displayable {
         return active;
     }
 
+
     // Functions ___________________________________________________
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+
+    public boolean isAdult() {
+        return age >= 18;
+    }
+
 
     @Override
     public void displayInfo() {
+
         System.out.println(
                 "ID: " + getId() +
-                        ", Name: " + getFirstName() + " " + getLastName() +
+                        ", Name: " + getFullName() +
                         ", DOB: " + getDateOfBirth() +
                         ", Gender: " + getGender() +
                         ", Phone: " + getPhoneNumber() +
@@ -204,8 +253,47 @@ public class Person implements Displayable {
         );
     }
 
+
     @Override
     public String displaySummary() {
-        return getId() + " - " + getFirstName() + " " + getLastName();
+        return getId() + " - " + getFullName();
+    }
+
+
+    @Override
+    public String toString() {
+
+        return "Person{" +
+                "id='" + id + '\'' +
+                ", name='" + getFullName() + '\'' +
+                ", age=" + age +
+                ", active=" + active +
+                '}';
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Person)) {
+            return false;
+        }
+
+        Person other = (Person) obj;
+
+        return id != null &&
+                id.equalsIgnoreCase(other.id);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                id == null ? null : id.toLowerCase()
+        );
     }
 }
