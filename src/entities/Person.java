@@ -2,8 +2,6 @@ package entities;
 
 import interfaces.Displayable;
 
-import java.util.Objects;
-
 public class Person implements Displayable {
 
     private String id;
@@ -14,13 +12,8 @@ public class Person implements Displayable {
     private String phoneNumber;
     private String email;
     private String address;
-    private String nationalId;
-    private int age;
-    private boolean active;
 
-
-    // Constructors ________________________________________________
-
+    // Constructor
     public Person(
             String id,
             String firstName,
@@ -29,27 +22,19 @@ public class Person implements Displayable {
             String gender,
             String phoneNumber,
             String email,
-            String address,
-            String nationalId,
-            int age,
-            boolean active) {
+            String address) {
 
-        setId(id);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setDateOfBirth(dateOfBirth);
-        setGender(gender);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-        setAddress(address);
-        setNationalId(nationalId);
-        setAge(age);
-        setActive(active);
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
     }
 
-
     // Overloaded Constructor
-
     public Person(
             String id,
             String firstName,
@@ -63,248 +48,106 @@ public class Person implements Displayable {
                 "Unknown",
                 "00000000",
                 "unknown@school.com",
-                "N/A",
-                "N/A",
-                0,
-                true
+                "N/A"
         );
     }
 
-
-    // Setters ___________________________________________________
-
-    public void setId(String id) {
-
-        if (id == null || id.trim().isEmpty()) {
-            System.out.println("ID cannot be empty.");
-            return;
-        }
-
-        this.id = id;
-    }
-
-
-    public void setFirstName(String firstName) {
-
-        if (firstName == null || firstName.trim().isEmpty()) {
-            System.out.println("First name cannot be empty.");
-            return;
-        }
-
-        this.firstName = firstName;
-    }
-
-
-    public void setLastName(String lastName) {
-
-        if (lastName == null || lastName.trim().isEmpty()) {
-            System.out.println("Last name cannot be empty.");
-            return;
-        }
-
-        this.lastName = lastName;
-    }
-
-
-    public void setDateOfBirth(String dateOfBirth) {
-
-        if (dateOfBirth == null || dateOfBirth.trim().isEmpty()) {
-            System.out.println("Date of birth cannot be empty.");
-            return;
-        }
-
-        this.dateOfBirth = dateOfBirth;
-    }
-
-
-    public void setGender(String gender) {
-
-        if (gender == null || gender.trim().isEmpty()) {
-            System.out.println("Gender cannot be empty.");
-            return;
-        }
-
-        this.gender = gender;
-    }
-
-
-    public void setPhoneNumber(String phoneNumber) {
-
-        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
-            System.out.println("Phone number cannot be empty.");
-            return;
-        }
-
-        if (!phoneNumber.matches("\\d+")) {
-            System.out.println("Phone number must contain numbers only.");
-            return;
-        }
-
-        this.phoneNumber = phoneNumber;
-    }
-
-
-    public void setEmail(String email) {
-
-        if (email == null || email.trim().isEmpty()) {
-            System.out.println("Email cannot be empty.");
-            return;
-        }
-
-        if (!email.contains("@")) {
-            System.out.println("Invalid email.");
-            return;
-        }
-
-        this.email = email;
-    }
-
-
-    public void setAddress(String address) {
-
-        if (address == null || address.trim().isEmpty()) {
-            System.out.println("Address cannot be empty.");
-            return;
-        }
-
-        this.address = address;
-    }
-
-
-    public void setNationalId(String nationalId) {
-
-        if (nationalId == null || nationalId.trim().isEmpty()) {
-            System.out.println("National ID cannot be empty.");
-            return;
-        }
-
-        this.nationalId = nationalId;
-    }
-
-
-    public void setAge(int age) {
-
-        if (age < 0 || age > 120) {
-            System.out.println("Invalid age.");
-            return;
-        }
-
-        this.age = age;
-    }
-
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-
-    // Getters ___________________________________________________
-
+    // Getters
     public String getId() {
         return id;
     }
-
 
     public String getFirstName() {
         return firstName;
     }
 
-
     public String getLastName() {
         return lastName;
     }
-
 
     public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-
     public String getGender() {
         return gender;
     }
-
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-
     public String getEmail() {
         return email;
     }
-
 
     public String getAddress() {
         return address;
     }
 
-
-    public String getNationalId() {
-        return nationalId;
+    // Setters
+    public void setId(String id) {
+        this.id = id;
     }
 
-
-    public int getAge() {
-        return age;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-
-    public boolean isActive() {
-        return active;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-    // Functions ___________________________________________________
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    // Functions
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
-
-    public boolean isAdult() {
-        return age >= 18;
-    }
-
-
     @Override
     public void displayInfo() {
-
         System.out.println(
-                "ID: " + getId() +
+                "ID: " + id +
                         ", Name: " + getFullName() +
-                        ", DOB: " + getDateOfBirth() +
-                        ", Gender: " + getGender() +
-                        ", Phone: " + getPhoneNumber() +
-                        ", Email: " + getEmail() +
-                        ", Address: " + getAddress() +
-                        ", National ID: " + getNationalId() +
-                        ", Age: " + getAge() +
-                        ", Active: " + isActive()
+                        ", DOB: " + dateOfBirth +
+                        ", Gender: " + gender +
+                        ", Phone: " + phoneNumber +
+                        ", Email: " + email +
+                        ", Address: " + address
         );
     }
 
-
     @Override
     public String displaySummary() {
-
-        return getId()
-                + " - "
-                + getFullName();
+        return id + " - " + getFullName();
     }
-
 
     @Override
     public String toString() {
-
         return "Person{" +
                 "id='" + id + '\'' +
                 ", name='" + getFullName() + '\'' +
-                ", age=" + age +
-                ", active=" + active +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -319,13 +162,6 @@ public class Person implements Displayable {
 
         Person other = (Person) obj;
 
-        return id != null
-                && id.equals(other.id);
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+        return id != null && id.equals(other.id);
     }
 }
