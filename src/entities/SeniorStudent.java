@@ -1,7 +1,9 @@
 package entities;
 
 public class SeniorStudent extends Student {
+
     private String specialization;
+
     public SeniorStudent(
             String id,
             String firstName,
@@ -36,7 +38,9 @@ public class SeniorStudent extends Student {
 
         setSpecialization(specialization);
     }
-    //Setter---------------------------------------------
+
+    // Setter
+
     public void setSpecialization(String specialization) {
         if (specialization == null || specialization.trim().isEmpty()) {
             System.out.println("Specialization cannot be empty.");
@@ -45,20 +49,29 @@ public class SeniorStudent extends Student {
 
         this.specialization = specialization;
     }
-    //Getter_________________________________________________
+
+    // Getter
+
     public String getSpecialization() {
         return specialization;
     }
 
-    //Function
+    // Overriding
+
     @Override
     public void displayInfo() {
         System.out.println(
-                "Senior Student: " + getFirstName() + " " + getLastName() +
+                "Senior Student: " + getFullName() +
+                        ", ID: " + getId() +
                         ", Grade: " + getGrade() +
                         ", Fee Balance: " + getFeeBalance() +
                         ", Specialization: " + getSpecialization()
         );
     }
 
+    @Override
+    public String displaySummary() {
+        return getId() + " - " + getFullName()
+                + " - " + getSpecialization();
+    }
 }
