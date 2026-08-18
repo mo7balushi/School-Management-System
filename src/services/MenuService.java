@@ -1,15 +1,12 @@
 package services;
 
+import entities.Student;
 import utils.HelperUtils;
 import utils.InputHandler;
-import entities.Student;
 
 public class MenuService {
 
     private StudentService studentService = new StudentService();
-
-
-    // Main Menu _________________________________________________
 
     public void start() {
 
@@ -58,11 +55,12 @@ public class MenuService {
     }
 
 
-    // Add Student _______________________________________________
+    // Add Student ______________________________________________
 
     private void addStudent() {
 
-        String id = InputHandler.readString("Enter ID: ");
+        String id =
+                InputHandler.readString("Enter ID: ");
 
         if (!HelperUtils.isValidString(id)) {
             System.out.println("Invalid ID.");
@@ -115,9 +113,7 @@ public class MenuService {
                 InputHandler.readString("Enter phone number: ");
 
         if (!phoneNumber.matches("\\d+")) {
-            System.out.println(
-                    "Phone number must contain numbers only."
-            );
+            System.out.println("Phone must contain numbers only.");
             return;
         }
 
@@ -138,27 +134,6 @@ public class MenuService {
             System.out.println("Invalid address.");
             return;
         }
-
-
-        String nationalId =
-                InputHandler.readString("Enter national ID: ");
-
-        if (!HelperUtils.isValidString(nationalId)) {
-            System.out.println("Invalid national ID.");
-            return;
-        }
-
-
-        int age =
-                InputHandler.readInt("Enter age: ");
-
-        if (!HelperUtils.isValidAge(age)) {
-            System.out.println("Invalid age.");
-            return;
-        }
-
-
-        boolean active = true;
 
 
         String gradeLevel =
@@ -183,20 +158,9 @@ public class MenuService {
                 InputHandler.readDouble("Enter fee balance: ");
 
         if (feeBalance < 0) {
-            System.out.println(
-                    "Fee balance cannot be negative."
-            );
+            System.out.println("Fee balance cannot be negative.");
             return;
         }
-
-
-        String scholarshipInput =
-                InputHandler.readString(
-                        "Scholarship? (yes/no): "
-                );
-
-        boolean scholarship =
-                scholarshipInput.equalsIgnoreCase("yes");
 
 
         Student student = new Student(
@@ -208,25 +172,18 @@ public class MenuService {
                 phoneNumber,
                 email,
                 address,
-                nationalId,
-                age,
-                active,
                 gradeLevel,
                 enrollmentDate,
-                feeBalance,
-                scholarship
+                feeBalance
         );
-
 
         studentService.add(student);
 
-        System.out.println(
-                "Student added successfully."
-        );
+        System.out.println("Student added successfully.");
     }
 
 
-    // View Students _____________________________________________
+    // View All Students ________________________________________
 
     private void viewAllStudents() {
 
@@ -241,14 +198,12 @@ public class MenuService {
     }
 
 
-    // Search Student ____________________________________________
+    // Search Student ___________________________________________
 
     private void searchStudentById() {
 
         String id =
-                InputHandler.readString(
-                        "Enter student ID: "
-                );
+                InputHandler.readString("Enter student ID: ");
 
         Student student =
                 studentService.searchById(id);
@@ -262,7 +217,7 @@ public class MenuService {
     }
 
 
-    // Remove Student ____________________________________________
+    // Remove Student ___________________________________________
 
     private void removeStudent() {
 
